@@ -7,9 +7,10 @@
 #+ `@reboot /home/aurele/dev/zsh/backmeup.zsh`
 #+ Make BOTH this script and `/etc/rc.d/rc.local` executables with `chmod +x`
 
-MYDIR="$(dirname $0)"
-DEST_DIR="${HOME}/backup/system"
+# MYDIR="$(dirname $0)"
+DEST_DIR="${HOME}/backup/"
 NAME="$1"
+REMOTE="123.65.23.85" # Alter it with my mutualized server's IP
 
 case "$#" in
     1) ;; # Do nothing as we expect exactly 1 argument.
@@ -18,24 +19,31 @@ case "$#" in
        ;;
 esac
 
-mkdir "${MYDIR}/${NAME}-$(date -I'minutes')"
+# if upload option; then
+    DEST_DIR=":${REMOTE}/backup"
+#fi
+
+NEW_SAVE="${DEST_DIR}/${NAME}-$(date -I'minutes')"
+mkdir "$NEW_SAVE"
 
 alias rsync='rsync -axAXH'
 
-rsync --files-from=file-list "$DEST_DIR"
-# rsync --exclude={'${HOME}/dev/python/*, $HOME/dev/scriptorium/*'} "${HOME}/dev" "$DEST_DIR"
+rsync -r --files-from=file-list "$DEST_DIR"
+rsync --exclude={'${HOME}/dev/python/*, $HOME/dev/scriptorium/*'} "${HOME}/dev" "$DEST_DIR"
 
-for dossier in "${HOME}/dev"; do
+for dossier in "${HOME}/dev/**"; do # Does pattern (i.e. clobber) work in `for` loop?
     if [ -d '.git' ]; then
         rsync "${HOME}/dev/${dossier}/.git/config" "$DEST_DIR"
     fi
 done
 
+tar -cJf "${NEW_SAVE}.tar.xz" "$NEW_SAVE"
+rm -f "$NEW_SAVE"
+exit 0
 #  TODO:
 #  1) Back up also Xfce shortcuts
 #  2) Back up terminal settings
-#  3) Make the script semi-interactive by prompting the user immediately with the following:
-#+ "Do you want to also upload your data to your personal server? (Y/n)"
+#  3) Add an `--upload` option to also upload the data to your personal server
 #  4) Add a `-y` option `if ($1 OR $2 == -y OR --yes); then` to cause the script to stay in
 #+ non-interactive mode.
 #  5) Prompt the user when invoked with `[--add | --edit | --remove]` to add/edit/remove

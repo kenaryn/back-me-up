@@ -3,7 +3,6 @@
 "${HOME}/.oh-my-zsh/custom/named_directories.zsh"
 '/etc/apt/sources.list'
 '/etc/apt/sources.list.d/aux.list'
-"${HOME}/writings"
-#--exclude={'${HOME}/dev/python/*, $HOME/dev/scriptorium/*'} "${HOME}/dev"
+"${HOME}/writings/"
 "${HOME}/.gnupg/puring.kbx"
 "$HOME/.git/config"
