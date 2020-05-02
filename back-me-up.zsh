@@ -8,7 +8,7 @@
 #+ Make BOTH this script and `/etc/rc.d/rc.local` executables with `chmod +x`
 
 # MYDIR="$(dirname $0)"
-DEST_DIR="${HOME}/backup/"
+DEST_DIR="${HOME}/back_up/"
 NAME="$1"
 REMOTE="123.65.23.85" # Alter it with my mutualized server's IP
 
@@ -19,27 +19,28 @@ case "$#" in
        ;;
 esac
 
-# if upload option; then
-    DEST_DIR=":${REMOTE}/backup"
-#fi
-
 NEW_SAVE="${DEST_DIR}/${NAME}-$(date -I'minutes')"
 mkdir "$NEW_SAVE"
 
 alias rsync='rsync -axAXH'
 
 rsync -r --files-from=file-list "$DEST_DIR"
-rsync --exclude={'${HOME}/dev/python/*, $HOME/dev/scriptorium/*'} "${HOME}/dev" "$DEST_DIR"
 
 for dossier in "${HOME}/dev/**"; do # Does pattern (i.e. clobber) work in `for` loop?
     if [ -d '.git' ]; then
-        rsync "${HOME}/dev/${dossier}/.git/config" "$DEST_DIR"
+        rsync "${HOME}/dev/${dossier}/.git/{config,info}" "$DEST_DIR"
     fi
 done
 
 tar -cJf "${NEW_SAVE}.tar.xz" "$NEW_SAVE"
 rm -f "$NEW_SAVE"
+# if upload option; then
+    ftp $REMOTE
+    rsync --password-file="${HOME}/.passwd" \
+        "${DEST_DIR}/${NEW_SAVE}.tar.xz" "domihyyk@199.59.247.89:/back_up/"
+#fi
 exit 0
+
 #  TODO:
 #  1) Back up also Xfce shortcuts
 #  2) Back up terminal settings

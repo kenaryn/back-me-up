@@ -1,0 +1,16 @@
+"${HOME}/.zshrc"
+"${HOME}/.oh-my-zsh/custom/alias*"
+"${HOME}/.oh-my-zsh/custom/named_directories*"
+"${HOME}/.Xdefaults"
+'/etc/apt/sources.list'
+'/etc/apt/sources.list.d/aux.list'
+"${HOME}/writings/"
+"--exclude={"${HOME}/.gnupg/*.*~"}" "${HOME}/.gnupg/"
+"${HOME}/.gitconfig"
+"${HOME}/.gitignore"
+"--exclude={"${HOME}/.irssi/away.log"}" "${HOME}/.irssi/config"
+"--exclude={"${HOME}/.config/sublime-text-3/Cache/*"}" "${HOME}/.config/sublime-text-3/"
+"--exclude={"${HOME}/dev/python/*", "$HOME/dev/scriptorium/*"}" "${HOME}/dev"
+"${HOME}/.mozilla/firefox/*.default"
+"${HOME}/.nvidia-settings-rc"
+"${HOME}/.ssh/"

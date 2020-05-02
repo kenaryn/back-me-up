@@ -1,8 +1,0 @@
-"${HOME}/.zshrc"
-"${HOME}/.oh-my-zsh/custom/alias.zsh"
-"${HOME}/.oh-my-zsh/custom/named_directories.zsh"
-'/etc/apt/sources.list'
-'/etc/apt/sources.list.d/aux.list'
-"${HOME}/writings/"
-"${HOME}/.gnupg/puring.kbx"
-"$HOME/.git/config"
