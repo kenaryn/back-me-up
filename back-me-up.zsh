@@ -1,5 +1,9 @@
 #!/usr/bin/env zsh
-#:  Description : Back up user settings and important works automatically.
+#: Description : Back up user settings and important works automatically.
+#: Version     : 0.0.1
+#: Author      : "Aurélien Plazzotta <aurelien.plazzotta@protonmail.com>"
+#: Options     : --upload - Upload back up to remote host
+#:             : -v       - Print version number
 #:+ Create a local archive from the copied files AND upload it to my mutualized server.
 #:+ See `anon_transfer.zsh` for details related to the uploaded back up.
 
