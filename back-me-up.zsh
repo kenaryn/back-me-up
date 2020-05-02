@@ -4,14 +4,12 @@
 #: Author      : "Aurélien Plazzotta <aurelien.plazzotta@protonmail.com>"
 #: Options     : --upload - Upload back up to remote host
 #:             : -v       - Print version number
-#:+ Create a local archive from the copied files AND upload it to my mutualized server.
 #:+ See `anon_transfer.zsh` for details related to the uploaded back up.
 
 #  Add the following into '.zshrc' to cause this script to be a cron job (i.e. executed at boot)
 #+ `@reboot /home/aurele/dev/zsh/backmeup.zsh`
 #+ Make BOTH this script and `/etc/rc.d/rc.local` executables with `chmod +x`
 
-# MYDIR="$(dirname $0)"
 DEST_DIR="${HOME}/back_up/"
 NAME="$1"
 REMOTE="123.65.23.85" # Alter it with my mutualized server's IP
@@ -38,17 +36,16 @@ done
 
 tar -cJf "${NEW_SAVE}.tar.xz" "$NEW_SAVE"
 rm -f "$NEW_SAVE"
-# if upload option; then
+if '--upload' option; then # See p. 39/40 and p. 114/115 from Pro Bash Programming
     ftp $REMOTE
     rsync --password-file="${HOME}/.passwd" \
         "${DEST_DIR}/${NEW_SAVE}.tar.xz" "domihyyk@199.59.247.89:/back_up/"
-#fi
+fi
 exit 0
 
 #  TODO:
 #  1) Back up also Xfce shortcuts
 #  2) Back up terminal settings
-#  3) Add an `--upload` option to also upload the data to your personal server
 #  4) Add a `-y` option `if ($1 OR $2 == -y OR --yes); then` to cause the script to stay in
 #+ non-interactive mode.
 #  5) Prompt the user when invoked with `[--add | --edit | --remove]` to add/edit/remove
@@ -56,4 +53,4 @@ exit 0
 #+ synchronized with my needs.
 # 6) Convert the current script into Zig language.
 # 7) Add a `--email` option for weekly reporting.
-# 8) Add a -v option (see page 39/40 from Pro Bash Programming).
+# 8) Add a -v option (see page 39/40 and 114/115 from Pro Bash Programming).
