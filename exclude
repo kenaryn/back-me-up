@@ -1,0 +1,4 @@
+"--exclude={"${HOME}/.gnupg/*.*~"}"
+"--exclude={"${HOME}/.irssi/away.log"}"
+"--exclude={"${HOME}/.config/sublime-text-3/Cache/*"}"
+"--exclude={"${HOME}/dev/python/*", "$HOME/dev/scriptorium/*"}"

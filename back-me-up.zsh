@@ -24,7 +24,7 @@ mkdir "$NEW_SAVE"
 
 alias rsync='rsync -axAXH'
 
-rsync -r --files-from=file-list "$DEST_DIR"
+rsync -r --files-from=file-list --exclude-from=exclude "$DEST_DIR"
 
 for dossier in "${HOME}/dev/**"; do # Does pattern (i.e. clobber) work in `for` loop?
     if [ -d '.git' ]; then
