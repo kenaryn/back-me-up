@@ -21,16 +21,24 @@ case "$#" in
        ;;
 esac
 
+# Explain usage when user omit argument when --upload option is invoked.
+if [ -z "$REMOTE" -o]; then
+    echo "usage: $0 <remote>" >&2
+    exit 1
+fi
+
 NEW_SAVE="${DEST_DIR}/${NAME}-$(date -I'minutes')"
 mkdir "$NEW_SAVE"
 
 alias rsync='rsync -axAXH'
 
-rsync -r --files-from=file-list --exclude-from=exclude "$DEST_DIR"
+rsync --info=progress2 --files-from=file-list --exclude-from=exclude "$DEST_DIR"
 
 for dossier in "${HOME}/dev/**"; do # Does pattern (i.e. clobber) work in `for` loop?
     if [ -d '.git' ]; then
-        rsync "${HOME}/dev/${dossier}/.git/{config,info}" "$DEST_DIR"
+        git archive "${HOME}/dev/${dossier}" "${DEST_DIR}/dev/${dossier}"
+        # Hooks are not automatically saved bit git clone or git archive
+        rsync "${HOME}/dev/${dossier}/.git/hook" "${DEST_DIR}/dev/${dossier}/.git/hook"
     fi
 done
 

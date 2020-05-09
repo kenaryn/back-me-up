@@ -1,1 +1,2 @@
 *.png diff=exif
+test/ export-ignore
